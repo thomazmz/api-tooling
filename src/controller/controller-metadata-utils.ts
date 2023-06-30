@@ -1,6 +1,6 @@
-import { Contructor } from '@thomazmz/core-context';
-import { ControllerMethodDescriptor } from './controller-method-descriptor';
-import { ControllerMethodMetadata } from './controller-method-metadata';
+import { Constructor } from "@thomazmz/core-context";
+import { ControllerMethodDescriptor } from "./controller-method-descriptor";
+import { ControllerMethodMetadata } from "./controller-method-metadata";
 
 export function attachControllerMethodMetadata(
   methodDescriptor: ControllerMethodDescriptor,
@@ -8,10 +8,10 @@ export function attachControllerMethodMetadata(
 ): ControllerMethodDescriptor {
   if (methodDescriptor.value) {
     const currentDesciptor =
-      methodDescriptor.value?.['controller_metadata'] ?? {};
+      methodDescriptor.value?.["controller_metadata"] ?? {};
     const newDescriptor = descriptorMetadata ?? {};
 
-    methodDescriptor.value['controller_metadata'] = {
+    methodDescriptor.value["controller_metadata"] = {
       key: newDescriptor.key ?? currentDesciptor.key,
       path: newDescriptor.path ?? currentDesciptor.path,
       method: newDescriptor.method ?? currentDesciptor.method,
@@ -28,19 +28,19 @@ export function attachControllerMethodMetadata(
 export function extractControllerMethodMetadata(
   methodDescriptor: ControllerMethodDescriptor
 ): ControllerMethodMetadata | void {
-  if (methodDescriptor.value && methodDescriptor.value['controller_metadata']) {
+  if (methodDescriptor.value && methodDescriptor.value["controller_metadata"]) {
     return {
-      key: methodDescriptor.value['controller_metadata'].key,
-      path: methodDescriptor.value['controller_metadata'].path,
-      method: methodDescriptor.value['controller_metadata'].method,
+      key: methodDescriptor.value["controller_metadata"].key,
+      path: methodDescriptor.value["controller_metadata"].path,
+      method: methodDescriptor.value["controller_metadata"].method,
       bodyValidator:
-        methodDescriptor.value['controller_metadata'].bodyValidator,
+        methodDescriptor.value["controller_metadata"].bodyValidator,
     };
   }
 }
 
 export function extractControllerMetadata(
-  controllerClass: Contructor
+  controllerClass: Constructor
 ): ControllerMethodMetadata[] {
   const controllerDescriptors = Object.values(
     Object.getOwnPropertyDescriptors(controllerClass.prototype)

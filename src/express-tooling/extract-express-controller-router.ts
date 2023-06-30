@@ -1,14 +1,16 @@
 import cors from "cors";
 import { json } from "body-parser";
 import { Router } from "express";
-import { ControllerMethodMetadata, extractControllerMetadata } from "controller";
+import { Constructor } from "@thomazmz/core-context";
+import {
+  ControllerMethodMetadata,
+  extractControllerMetadata,
+} from "controller";
 import { createBodyValidationHandler } from "./create-express-validation-handler";
 import { createRequestHandler } from "./create-express-request-handler";
 
-import { Contructor } from "@thomazmz/core-context";
-
 export function extractControllerRouter<C>(
-  classConstructor: Contructor<C>,
+  classConstructor: Constructor<C>,
   classEntity?: C
 ): Router {
   if (!classEntity) {
