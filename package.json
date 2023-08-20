@@ -24,8 +24,7 @@
   },
   "scripts": {
     "build": "rimraf ./lib/* && tsc",
-    "test:unit": "jest --config ./jest.json --passWithNoTests",
-    "start:local": "ts-node ./src/index.ts"
+    "test:unit": "jest --config ./jest.json --passWithNoTests"
   },
   "devDependencies": {
     "@thomazmz/core-context": "^0.2.25",
