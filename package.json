@@ -1,7 +1,7 @@
 {
   "name": "@thomazmz/core-tooling",
   "license": "ISC",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": "Thomaz Zandonotto <thomaz.zandonotto@gmail.com>",
   "description": "Tooling to build Node web applications",
   "main": "lib/index.js",
