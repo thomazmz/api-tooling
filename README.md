@@ -6,7 +6,7 @@ This packages holds tooling that I frequently use to put together Node web appli
 
 The resources here are implemented on top of libraries such as:
 - [Express](https://github.com/expressjs/express)
-- [AWilix](https://github.com/jeffijoe/awilix)
+- [Awilix](https://github.com/jeffijoe/awilix)
 - [Joi](https://github.com/hapijs/joi)
 
 This package is tipically used togetheter with other personal projects of mine, such as the following:
