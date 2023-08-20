@@ -1,9 +1,9 @@
 {
-  "name": "@thomazmz/api-tooling",
+  "name": "@thomazmz/core-tooling",
   "license": "ISC",
   "version": "0.0.1",
   "author": "Thomaz Zandonotto <thomaz.zandonotto@gmail.com>",
-  "description": "Some tooling for building Node APIs",
+  "description": "Tooling to build Node web applications",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [

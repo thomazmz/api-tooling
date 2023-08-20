@@ -83,7 +83,7 @@ jobs:
       - run:
           name: "Configure GitHub Circle CI user"
           command: |
-            git config user.email "circleci@api-tooling.com"
+            git config user.email "circleci@core-tooling.com"
             git config user.name "circleci"
       - run:
           name: "Instal conventional-recommended-bump globally"
