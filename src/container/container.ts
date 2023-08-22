@@ -1,5 +1,5 @@
 import { AwilixContainer, InjectionModeType, asClass, asFunction, asValue, createContainer } from 'awilix';
-import { Constructor } from '@thomazmz/core-context';
+import { Constructor, Function } from '@thomazmz/core-context';
 
 export class Container {
 
@@ -29,7 +29,7 @@ export class Container {
     this.container.register(registrationKey, asClass(registration).scoped())
   }
 
-  public registerInitializer(initializerKey: string, initializer: () => Promise<Record<string, any>>) {
+  public registerInitializer(initializerKey: string, initializer: Function<Promise<Record<string, any>>>) {
     this.initializationMetadata.push({ initializerKey, initializer })
   }
 
@@ -45,9 +45,9 @@ export class Container {
     }
   }
 
-  public registerContainer(sourceContainer: Container) {
-    const initializationMetadata = sourceContainer.getInitializationMetadata()
-    const registrationHash = sourceContainer.getRegistrations()
+  public registerContainer(container: Container) {
+    const initializationMetadata = container.getInitializationMetadata()
+    const registrationHash = container.getRegistrations()
 
     for (const metadata of initializationMetadata) {
       this.initializationMetadata.push(metadata)
