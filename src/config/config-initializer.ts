@@ -7,36 +7,51 @@ export async function initializeConfigValues<C extends ValueObject>(
   configProfile: ConfigInitializerProfile<C>,
   configDefaults?: ConfigInitializerDefaults<C>
 ): Promise<C> {
-  return Object.keys(configProfile).reduce(async (configObjectPromise, configProfileKey) => {
-    const configObject = await configObjectPromise;
+  return Object.keys(configProfile).reduce(
+    async (configObjectPromise, configProfileKey) => {
+      const configObject = await configObjectPromise;
 
-    const nestedProfile = configProfile[configProfileKey];
+      const nestedProfile = configProfile[
+        configProfileKey
+      ] as ConfigInitializerProfile;
 
-    const defaultValue = configDefaults?.[configProfileKey];
+      // As the generic type C[key] does not have predefined
+      // depth and ConfigInitializerDefaults is a recursive
+      // type, parsing configDefaults to unkown and then cast
+      // it back to ConfigInitializerDefaults is a way to get
+      // around the recursive type instantiation limit defined
+      // by TypeScript.
+      const nestedDefaults = (configDefaults as unknown)?.[
+        configProfileKey
+      ] as ConfigInitializerDefaults;
 
-    if (!Array.isArray(nestedProfile)) {
-      return { ...configObject, [configProfileKey]: await initializeConfigValues(
-        configloader,
-        nestedProfile,
-        configDefaults,
-        ),
-      };
-    }
+      if (!Array.isArray(nestedProfile)) {
+        return {
+          ...configObject,
+          [configProfileKey]: await initializeConfigValues(
+            configloader,
+            nestedProfile,
+            nestedDefaults
+          ),
+        };
+      }
 
-    const [key, schema] = nestedProfile;
+      const [key, schema] = nestedProfile;
 
-    const unparsedValue = await configloader?.load(key);
+      const unparsedValue = await configloader?.load(key);
 
-    if (!defaultValue && !unparsedValue) {
-      throw new Error(`Could not load the environment variable ${key}.`);
-    }
+      if (!nestedDefaults && !unparsedValue) {
+        throw new Error(`Could not load the environment variable ${key}.`);
+      }
 
-    const { value, error } = schema.validate(unparsedValue);
+      const { value, error } = schema.validate(unparsedValue);
 
-    if (!defaultValue && error) {
-      throw new Error(`Could not parse the environment variable ${key}.`);
-    }
+      if (!nestedDefaults && error) {
+        throw new Error(`Could not parse the environment variable ${key}.`);
+      }
 
-    return { ...configObject, [configProfileKey]: value ?? defaultValue };
-  }, {} as Promise<C>);
+      return { ...configObject, [configProfileKey]: value ?? nestedDefaults };
+    },
+    {} as Promise<C>
+  );
 }
