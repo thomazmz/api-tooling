@@ -13,6 +13,7 @@ export class Container {
   constructor(injectionMode: InjectionModeType = 'CLASSIC') {
     this.container = createContainer({ injectionMode })
   }
+
   public buildClass<T>(classConstructor: Constructor): T {
     return this.container.build<T>(asClass(classConstructor))
   }

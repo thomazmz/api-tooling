@@ -1,6 +1,6 @@
 {
-  "exclude": [ "**/node_modules" ],
-  "include": [ "src/**/*.ts" ],
+  "exclude": ["**/node_modules"],
+  "include": ["src/**/*.ts"],
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
@@ -23,6 +23,6 @@
     "moduleResolution": "node",
     "target": "ES6",
     "baseUrl": "src",
-    "outDir": "./lib",
+    "outDir": "./lib"
   }
 }

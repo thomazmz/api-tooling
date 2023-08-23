@@ -3,7 +3,7 @@ import { ConfigInitializerProfile } from "./config-initializer-profile";
 import { ConfigInitializerDefaults } from "./config-initializer-defaults";
 
 export async function initializeConfigValues<C extends ValueObject>(
-  configloader: ConfigLoader,
+  configLoader: ConfigLoader,
   configProfile: ConfigInitializerProfile<C>,
   configDefaults?: ConfigInitializerDefaults<C>
 ): Promise<C> {
@@ -29,7 +29,7 @@ export async function initializeConfigValues<C extends ValueObject>(
         return {
           ...configObject,
           [configProfileKey]: await initializeConfigValues(
-            configloader,
+            configLoader,
             nestedProfile,
             nestedDefaults
           ),
@@ -38,7 +38,7 @@ export async function initializeConfigValues<C extends ValueObject>(
 
       const [key, schema] = nestedProfile;
 
-      const unparsedValue = await configloader?.load(key);
+      const unparsedValue = await configLoader?.load(key);
 
       if (!nestedDefaults && !unparsedValue) {
         throw new Error(`Could not load the environment variable ${key}.`);
